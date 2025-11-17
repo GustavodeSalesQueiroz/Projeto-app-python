@@ -1,3 +1,24 @@
-[
-  
+    [
+  {
+    "id": 1,
+    "nome": "gustavo",
+    "telefone": "",
+    "servico": "Corte Masculino",
+    "preco": 30.0,
+    "duracao": 45,
+    "data": "17/10/2025",
+    "horario": "12:00",
+    "status": "Removido"
+  },
+  {
+    "id": 2,
+    "nome": "gusta",
+    "telefone": "11966591931",
+    "servico": "Corte Masculino",
+    "preco": 30.0,
+    "duracao": 45,
+    "data": "27/10/2025",
+    "horario": "12:00",
+    "status": "Agendado"
+  }
 ]

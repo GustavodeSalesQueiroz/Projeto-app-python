@@ -11,6 +11,7 @@ class SalaoAgendamento:
         
         # Serviços disponíveis
         self.servicos = [
+            {"nome": "   ", "preco": 00.00, "duracao": 0},
             {"nome": "Corte Feminino", "preco": 50.00, "duracao": 60},
             {"nome": "Corte Masculino", "preco": 30.00, "duracao": 45},
             {"nome": "Escova", "preco": 40.00, "duracao": 45},
@@ -23,7 +24,7 @@ class SalaoAgendamento:
         
         # Horários disponíveis
         self.horarios_disponiveis = [
-            "08:00", "08:30", "09:00", "09:30", "10:00", "10:30",
+            "  ","08:00", "08:30", "09:00", "09:30", "10:00", "10:30",
             "11:00", "11:30", "12:00", "12:30", "13:00", "13:30",
             "14:00", "14:30", "15:00", "15:30", "16:00", "16:30",
             "17:00", "17:30", "18:00", "18:30"
@@ -99,8 +100,8 @@ class SalaoAgendamento:
 def main(page: ft.Page):
     page.title = "Salão de Cabeleireiro - Sistema de Agendamento"
     page.theme_mode = ft.ThemeMode.LIGHT
-    page.window.width = 900
-    page.window.height = 700
+    page.window.width = 520
+    page.window.height = 900  
     page.window.resizable = True
     
     # Instância da classe de agendamento
@@ -133,19 +134,19 @@ def main(page: ft.Page):
     # Componentes da interface
     nome_field = ft.TextField(
         label="Nome do Cliente",
-        width=300,
+        width=200,
         border_color=ft.Colors.BLUE_400
     )
     
     telefone_field = ft.TextField(
         label="Telefone",
-        width=300,
+        width=195,
         border_color=ft.Colors.BLUE_400
     )
     
     servico_dropdown = ft.Dropdown(
         label="Serviço",
-        width=300,
+        width=200,
         options=[ft.dropdown.Option(s['nome']) for s in salao.servicos],
         border_color=ft.Colors.BLUE_400
     )
@@ -156,15 +157,15 @@ def main(page: ft.Page):
     )
     
     data_field = ft.TextField(
-        label="Data (DD/MM/AAAA)",
-        width=200,
+        label="(DD/MM/AAAA)",
+        width=99,
         read_only=True,
         border_color=ft.Colors.BLUE_400
     )
     
     horario_dropdown = ft.Dropdown(
         label="Horário",
-        width=150,
+        width=145,
         options=[ft.dropdown.Option(h) for h in salao.horarios_disponiveis],
         border_color=ft.Colors.BLUE_400
     )
@@ -261,7 +262,7 @@ def main(page: ft.Page):
                                 ft.Text(f"💰 R$ {agendamento['preco']:.2f}", color=ft.Colors.GREEN_700),
                                 ft.Container(
                                     content=ft.Text(f"{icone_status} {agendamento['status']}", 
-                                                   color=ft.Colors.WHITE, size=12),
+                                                   color=ft.Colors.WHITE, size=15),
                                     bgcolor=cor_status,
                                     padding=ft.padding.symmetric(horizontal=8, vertical=4),
                                     border_radius=10
@@ -302,8 +303,8 @@ def main(page: ft.Page):
             mostrar_mensagem("Nome é obrigatório!", ft.Colors.RED_600)
             return
         
-        if not telefone_field.value:
-            mostrar_mensagem("Telefone é obrigatório!", ft.Colors.RED_600)
+        if not telefone_field.value or not telefone_field.value.isdigit() or len(telefone_field.value) != 11:
+            mostrar_mensagem("Telefone inválido! Informe 11 dígitos numéricos.", ft.Colors.RED_600)
             return
         
         if not servico_dropdown.value:
@@ -339,8 +340,10 @@ def main(page: ft.Page):
             nome_field.value = ""
             telefone_field.value = ""
             servico_dropdown.value = None
-            data_field.value = ""
             horario_dropdown.value = None
+            data_field.value = ""
+            
+            page.update()
             
             # Atualiza a lista e recarrega a interface
             atualizar_lista_agendamentos()
