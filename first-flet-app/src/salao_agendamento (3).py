@@ -11,7 +11,6 @@ class SalaoAgendamento:
         
         # Serviços disponíveis
         self.servicos = [
-            {"nome": "   ", "preco": 00.00, "duracao": 0},
             {"nome": "Corte Feminino", "preco": 50.00, "duracao": 60},
             {"nome": "Corte Masculino", "preco": 30.00, "duracao": 45},
             {"nome": "Escova", "preco": 40.00, "duracao": 45},
@@ -102,7 +101,11 @@ def main(page: ft.Page):
     page.theme_mode = ft.ThemeMode.LIGHT
     page.window.width = 520
     page.window.height = 900  
-    page.window.resizable = True
+    page.window.resizable = False
+    #trocar cor de fundo
+    page.bgcolor = ft.Colors.LIGHT_BLUE_50
+    #trocar cor de borda da janela
+    page.window.bgcolor = ft.Colors.BLUE_200
     
     # Instância da classe de agendamento
     salao = SalaoAgendamento()
@@ -130,7 +133,7 @@ def main(page: ft.Page):
             page.update()
         
         threading.Thread(target=limpar_mensagem, daemon=True).start()
-    
+        
     # Componentes da interface
     nome_field = ft.TextField(
         label="Nome do Cliente",
@@ -159,7 +162,7 @@ def main(page: ft.Page):
     data_field = ft.TextField(
         label="(DD/MM/AAAA)",
         width=99,
-        read_only=True,
+        read_only=False,
         border_color=ft.Colors.BLUE_400
     )
     
@@ -194,15 +197,17 @@ def main(page: ft.Page):
         for data in sorted(agendamentos_por_data.keys()):
             # Cabeçalho da data
             agendamentos_list.controls.append(
+
                 ft.Container(
                     content=ft.Text(
                         f"📅 {data}",
                         size=18,
                         weight=ft.FontWeight.BOLD,
-                        color=ft.Colors.BLUE_700
+                        color=ft.Colors.BLUE_700,
                     ),
                     padding=ft.padding.symmetric(vertical=10)
                 )
+                
             )
             
             # Agendamentos do dia
@@ -383,15 +388,20 @@ def main(page: ft.Page):
         ft.Container(
             content=ft.Column([
                 # Cabeçalho
+                # Cabeçalho Centralizado
                 ft.Container(
                     content=ft.Text(
-                        "💇‍♀️ Salão de Cabeleireiro",
+                        "Salão de Cabeleireiro",
                         size=28,
                         weight=ft.FontWeight.BOLD,
-                        color=ft.Colors.WHITE
+                        color=ft.Colors.WHITE,
+                        # 1. Alinha o texto no centro do espaço do controle Text
+                        text_align=ft.TextAlign.CENTER
                     ),
                     bgcolor=ft.Colors.PINK_400,
                     padding=ft.padding.all(20),
+                    # 2. Alinha o conteúdo (o Text) no centro do Container
+                    alignment=ft.alignment.center,
                     border_radius=10,
                     margin=ft.margin.only(bottom=20)
                 ),
@@ -407,7 +417,7 @@ def main(page: ft.Page):
                 ft.Card(
                     content=ft.Container(
                         content=ft.Column([
-                            ft.Text("Novo Agendamento", size=20, weight=ft.FontWeight.BOLD),
+                            ft.Text("Novo Agendamento", size=20,weight=ft.FontWeight.BOLD),
                             ft.Row([nome_field, telefone_field]),
                             ft.Row([servico_dropdown]),
                             ft.Row([data_field, btn_data, horario_dropdown]),
