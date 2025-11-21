@@ -1,6 +1,6 @@
 # Documentação do Sistema de Gestão de Horários para Salão de Cabeleireiro
 
-**Autor:** Manus AI
+**Autor:** Gustavo de Sales , Eduardo de Sales , Stefany coelho, Ryan Honorato.
 **Data:** 21 de Novembro de 2025
 **Versão:** 1.0
 
