@@ -1,0 +1,13 @@
+[
+  {
+    "id": 1,
+    "nome": "gustavo",
+    "telefone": "11966591931",
+    "servico": "Corte Masculino",
+    "preco": 30.0,
+    "duracao": 45,
+    "data": "21/11/2025",
+    "horario": "08:00",
+    "status": "Removido"
+  }
+]
