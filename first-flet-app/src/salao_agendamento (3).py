@@ -100,7 +100,7 @@ def main(page: ft.Page):
     page.title = "Salão de Cabeleireiro - Sistema de Agendamento"
     page.theme_mode = ft.ThemeMode.LIGHT
     page.window.width = 520
-    page.window.height = 900  
+    page.window.height = 900
     page.window.resizable = False
     #trocar cor de fundo
     page.bgcolor = ft.Colors.LIGHT_BLUE_50
@@ -156,19 +156,25 @@ def main(page: ft.Page):
     
     data_picker = ft.DatePicker(
         first_date=datetime.datetime.now(),
-        last_date=datetime.datetime.now() + datetime.timedelta(days=365)
+        last_date=datetime.datetime.now() + datetime.timedelta(days=365),
     )
-    
+
+    # Coloca o DatePicker no overlay uma vez só
+    page.overlay.append(data_picker)
+
     data_field = ft.TextField(
         label="(DD/MM/AAAA)",
+        label_style=ft.TextStyle(size=13),
         width=99,
-        read_only=False,
-        border_color=ft.Colors.BLUE_400
+        read_only=True,
+        border_color=ft.Colors.BLUE_400,
     )
     
     horario_dropdown = ft.Dropdown(
         label="Horário",
-        width=145,
+        label_style=ft.TextStyle(size=13),
+        text_size=14,
+        width=122,
         options=[ft.dropdown.Option(h) for h in salao.horarios_disponiveis],
         border_color=ft.Colors.BLUE_400
     )
@@ -288,19 +294,18 @@ def main(page: ft.Page):
         
         page.update()
     
+    def abrir_date_picker(e):
+        """Abre o seletor de data"""
+        data_picker.open = True
+        page.update()
+
     def on_date_change(e):
         """Callback para mudança de data"""
         if data_picker.value:
-            data_formatada = data_picker.value.strftime("%d/%m/%Y")
-            data_field.value = data_formatada
+            data_field.value = data_picker.value.strftime("%d/%m/%Y")
+            data_picker.open = False
             page.update()
-    
-    def abrir_date_picker(e):
-        """Abre o seletor de data"""
-        page.overlay.append(data_picker)
-        data_picker.open = True
-        page.update()
-    
+
     def agendar_horario(e):
         """Função para agendar um novo horário"""
         # Validações
@@ -401,7 +406,7 @@ def main(page: ft.Page):
                     bgcolor=ft.Colors.PINK_400,
                     padding=ft.padding.all(20),
                     # 2. Alinha o conteúdo (o Text) no centro do Container
-                    alignment=ft.alignment.center,
+                    alignment=ft.Alignment.CENTER,
                     border_radius=10,
                     margin=ft.margin.only(bottom=20)
                 ),
@@ -410,7 +415,7 @@ def main(page: ft.Page):
                 ft.Container(
                     content=status_message,
                     height=30,
-                    alignment=ft.alignment.center
+                    alignment=ft.Alignment.CENTER
                 ),
                 
                 # Formulário de agendamento
@@ -448,7 +453,7 @@ def main(page: ft.Page):
                                         border_radius=10
                                     )
                                 ], spacing=10),
-                                alignment=ft.alignment.center_right
+                                alignment=ft.Alignment.CENTER_RIGHT
                             )
                         ], alignment=ft.MainAxisAlignment.SPACE_BETWEEN),
                         ft.Container(
