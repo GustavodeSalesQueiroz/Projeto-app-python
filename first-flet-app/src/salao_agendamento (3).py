@@ -13,7 +13,7 @@ class SalaoAgendamento:
         self.servicos = [
             {"nome": "Corte Feminino", "preco": 50.00, "duracao": 60},
             {"nome": "Corte Masculino", "preco": 30.00, "duracao": 45},
-            {"nome": "Escova", "preco": 40.00, "duracao": 45},
+            {"nome": "Escova", "preco": 50.00, "duracao": 45},
             {"nome": "Coloração", "preco": 120.00, "duracao": 120},
             {"nome": "Hidratação", "preco": 60.00, "duracao": 60},
             {"nome": "Progressiva", "preco": 200.00, "duracao": 180},
